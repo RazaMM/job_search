@@ -10,7 +10,7 @@ abstract final class AppTheme {
       brightness: Brightness.light,
       seedColor: _seedColor,
     ),
-    textTheme: GoogleFonts.plusJakartaSansTextTheme(),
+    //textTheme: GoogleFonts.plusJakartaSansTextTheme(),
   );
 
   static final dark = ThemeData(
@@ -19,19 +19,19 @@ abstract final class AppTheme {
       brightness: Brightness.dark,
       seedColor: _seedColor,
     ),
-    textTheme: GoogleFonts.plusJakartaSansTextTheme(),
+    //textTheme: GoogleFonts.plusJakartaSansTextTheme(),
   );
 
   static const radius = Radius.circular(15);
 
   static BoxDecoration getBoxDecoration({
-    required Color background,
+    Color? background,
     required Color shadow,
-    Radius radius = AppTheme.radius,
+    BorderRadius borderRadius = BorderRadius.zero,
   }) {
     return BoxDecoration(
       color: background,
-      borderRadius: BorderRadius.all(radius),
+      borderRadius: borderRadius,
       boxShadow: [
         BoxShadow(
           color: shadow,
