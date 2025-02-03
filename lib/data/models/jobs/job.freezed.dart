@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+Job _$JobFromJson(Map<String, dynamic> json) {
+  return _Job.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Job {
   String get id => throw _privateConstructorUsedError;
@@ -22,6 +26,9 @@ mixin _$Job {
   String get posting => throw _privateConstructorUsedError;
   DateTime get dateApplied => throw _privateConstructorUsedError;
   JobStatus get status => throw _privateConstructorUsedError;
+
+  /// Serializes this Job to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Job
   /// with the given fields replaced by the non-null parameter values.
@@ -156,7 +163,7 @@ class __$$JobImplCopyWithImpl<$Res> extends _$JobCopyWithImpl<$Res, _$JobImpl>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$JobImpl extends _Job {
   const _$JobImpl(
       {required this.id,
@@ -166,6 +173,9 @@ class _$JobImpl extends _Job {
       required this.dateApplied,
       required this.status})
       : super._();
+
+  factory _$JobImpl.fromJson(Map<String, dynamic> json) =>
+      _$$JobImplFromJson(json);
 
   @override
   final String id;
@@ -187,6 +197,13 @@ class _$JobImpl extends _Job {
   @pragma('vm:prefer-inline')
   _$$JobImplCopyWith<_$JobImpl> get copyWith =>
       __$$JobImplCopyWithImpl<_$JobImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$JobImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Job extends Job {
@@ -198,6 +215,8 @@ abstract class _Job extends Job {
       required final DateTime dateApplied,
       required final JobStatus status}) = _$JobImpl;
   const _Job._() : super._();
+
+  factory _Job.fromJson(Map<String, dynamic> json) = _$JobImpl.fromJson;
 
   @override
   String get id;

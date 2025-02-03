@@ -3,11 +3,12 @@ import 'package:job_search/data/models/jobs/job_status.dart';
 import 'package:uuid/uuid.dart';
 
 part 'job.freezed.dart';
+part 'job.g.dart';
 
 var uuid = Uuid();
 
 @freezed
-class Job with _$Job {
+sealed class Job with _$Job {
   const Job._();
 
   const factory Job({
@@ -29,6 +30,8 @@ class Job with _$Job {
       status: JobStatus.applied,
     );
   }
+
+  factory Job.fromJson(Map<String, dynamic> json) => _$JobFromJson(json);
 
   @override
   bool operator ==(Object other) {
