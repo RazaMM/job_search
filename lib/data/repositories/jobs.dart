@@ -1,5 +1,6 @@
 import 'package:job_search/data/models/job.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 class Jobs {
@@ -8,11 +9,12 @@ class Jobs {
   static Future<Database> get db async {
     if (_db != null) return _db!;
 
-    var path = p.join(await getDatabasesPath(), 'job_search.db');
+    final dir = await getLibraryDirectory();
+    var path = p.join(dir.path, 'job_search.db');
 
     _db = await openDatabase(path, version: 1, onCreate: (db, version) async {
       await db.execute(
-          'CREATE TABLE jobs (id TEXT PRIMARY KEY), title TEXT, company TEXT, posting TEXT, dateApplied INTEGER, status TEXT');
+          'CREATE TABLE jobs (id TEXT PRIMARY KEY, title TEXT, company TEXT, posting TEXT, dateApplied TEXT, status TEXT)');
     });
 
     return _db!;
