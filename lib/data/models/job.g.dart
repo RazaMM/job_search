@@ -29,5 +29,6 @@ const _$JobStatusEnumMap = {
   JobStatus.interviewing: 'interviewing',
   JobStatus.rejected: 'rejected',
   JobStatus.offered: 'offered',
+  JobStatus.removed: 'removed',
   JobStatus.accepted: 'accepted',
 };

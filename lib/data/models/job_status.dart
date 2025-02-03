@@ -3,5 +3,6 @@ enum JobStatus {
   interviewing,
   rejected,
   offered,
+  removed,
   accepted
 }
