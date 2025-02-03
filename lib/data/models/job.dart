@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:job_search/data/models/jobs/job_status.dart';
+import 'package:job_search/data/models/job_status.dart';
 import 'package:uuid/uuid.dart';
 
 part 'job.freezed.dart';
