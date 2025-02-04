@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract final class AppTheme {
-  static const _seedColor = Colors.blue;
+  static const _seedColor = Colors.indigo;
 
   static final light = ThemeData(
     useMaterial3: true,
