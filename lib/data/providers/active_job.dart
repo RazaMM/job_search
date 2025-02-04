@@ -11,8 +11,8 @@ class ActiveJob extends _$ActiveJob {
     return null;
   }
 
-  void update(Job job) {
-    if(job.id != state?.id) {
+  void update(Job? job) {
+    if(job == null || job.id != state?.id) {
       state = job;
     }
   }
