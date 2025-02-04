@@ -44,7 +44,15 @@ class Dashboard extends ConsumerWidget {
             Expanded(
               flex: 3,
               child: Container(
-                color: theme.colorScheme.surfaceContainerLow,
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerLow,
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.colorScheme.surfaceContainer,
+                      offset: const Offset(8, 0),
+                    )
+                  ],
+                ),
                 padding: EdgeInsets.all(15),
                 child: widget,
               ),

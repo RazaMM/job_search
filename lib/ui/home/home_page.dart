@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:job_search/data/models/job.dart';
 import 'package:job_search/data/providers/jobs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:job_search/ui/core/themes/theme.dart';
 import 'package:job_search/ui/home/dashboard.dart';
+import 'package:job_search/utils/brightness_shift.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -15,12 +17,29 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          onAddJob(ref);
-        },
-        child: Icon(Icons.add),
+      floatingActionButton: Container(
+        decoration: AppTheme.getBoxDecoration(
+          shadow: theme.colorScheme.primaryContainer.darken(0.1),
+          borderRadius: const BorderRadius.all(
+            AppTheme.radius,
+          ),
+        ),
+        child: FloatingActionButton(
+          elevation: 0,
+          hoverElevation: 0,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              AppTheme.radius,
+            ),
+          ),
+          onPressed: () {
+            onAddJob(ref);
+          },
+          child: Icon(Icons.add),
+        ),
       ),
       body: FutureBuilder(
         future: ref.read(jobsProvider.notifier).init(),
