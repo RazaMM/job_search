@@ -119,7 +119,13 @@ class _JobListItemState extends State<JobListItem> {
                   ),
                 ),
                 subtitle: Text(
-                  widget.job.company,
+                  '@ ${widget.job.company}',
+                  style: theme.textTheme.bodySmall!.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
+                ),
+                trailing: Text(
+                  'Applied on ${_dateFormatter.format(widget.job.dateApplied)}',
                   style: theme.textTheme.bodySmall!.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                   ),
