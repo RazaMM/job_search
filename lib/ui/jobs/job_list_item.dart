@@ -109,7 +109,8 @@ class _JobListItemState extends State<JobListItem> {
                     deletionProgress > 0.0 ? Radius.zero : AppTheme.radius,
               ),
               child: ListTile(
-                onTap: () {},
+                onTap: onTapped,
+                leading: Icon(widget.job.status.icon),
                 title: Text(
                   widget.job.title,
                   style: theme.textTheme.bodyLarge!.copyWith(
