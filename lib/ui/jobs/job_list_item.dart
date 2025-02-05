@@ -125,7 +125,7 @@ class _JobListItemState extends State<JobListItem> {
                   ),
                 ),
                 trailing: Text(
-                  'Applied on ${_dateFormatter.format(widget.job.dateApplied)}',
+                  _dateFormatter.format(widget.job.dateApplied),
                   style: theme.textTheme.bodySmall!.copyWith(
                     color: theme.colorScheme.onPrimaryContainer,
                   ),

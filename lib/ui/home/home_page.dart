@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/data/models/job.dart';
+import 'package:job_search/data/providers/active_job.dart';
 import 'package:job_search/data/providers/jobs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:job_search/ui/core/themes/theme.dart';
@@ -12,7 +13,10 @@ class HomePage extends ConsumerWidget {
   final sidebarWidget = 400.0;
 
   void onAddJob(WidgetRef ref) {
-    ref.read(jobsProvider.notifier).addJob(Job.placeholder());
+    final newJob = Job.placeholder();
+
+    ref.read(jobsProvider.notifier).addJob(newJob);
+    ref.read(activeJobProvider.notifier).update(newJob);
   }
 
   @override

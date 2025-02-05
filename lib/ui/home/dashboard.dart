@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:job_search/data/models/job.dart';
+import 'package:job_search/data/providers/active_job.dart';
 import 'package:job_search/data/providers/jobs.dart';
 import 'package:job_search/ui/core/widgets/conditional_parent.dart';
 import 'package:job_search/ui/jobs/job_chart.dart';
+import 'package:job_search/ui/jobs/job_editing_form.dart';
 import 'package:job_search/ui/jobs/job_list.dart';
 
 class Dashboard extends ConsumerWidget {
@@ -14,7 +16,10 @@ class Dashboard extends ConsumerWidget {
   void onJobDelete(BuildContext context, WidgetRef ref, Job job) {
     ref.read(jobsProvider.notifier).removeJob(job);
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    final messenger = ScaffoldMessenger.of(context);
+
+    messenger.clearSnackBars();
+    messenger.showSnackBar(
       SnackBar(
         content: Text('Deleted $job'),
         action: SnackBarAction(
@@ -32,6 +37,7 @@ class Dashboard extends ConsumerWidget {
     final media = MediaQuery.of(context);
     final theme = Theme.of(context);
     final jobs = ref.watch(jobsProvider);
+    final activeJob = ref.watch(activeJobProvider);
 
     return ConditionalParent(
       condition: media.size.width > breakpoint,
@@ -59,20 +65,37 @@ class Dashboard extends ConsumerWidget {
             ),
             Expanded(
               flex: 7,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Center(
-                  child: Text(
-                    "Select a job to edit, or create a new one.",
-                    style: theme.textTheme.titleLarge!.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(
-                        alpha: 0.3,
+              child: activeJob == null
+                  ? Center(
+                      child: Text(
+                        "Select a job to edit, or create a new one.",
+                        style: theme.textTheme.titleLarge!.copyWith(
+                          color: theme.colorScheme.onSurface.withValues(
+                            alpha: 0.3,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        padding: EdgeInsets.all(40),
+                        constraints: BoxConstraints(
+                          maxWidth: 600,
+                        ),
+                        child: JobEditingForm(
+                          job: activeJob,
+                          key: ValueKey(activeJob.id),
+                          onSubmit: (job) {
+                            ref.read(jobsProvider.notifier).updateJob(job);
+                          },
+                          onCancel: () {
+                            ref.read(activeJobProvider.notifier).update(null);
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-            )
+            ),
           ],
         );
       },
@@ -83,7 +106,9 @@ class Dashboard extends ConsumerWidget {
           Expanded(
             child: JobList(
               jobs: jobs,
-              onSelect: (job) {},
+              onSelect: (job) {
+                ref.read(activeJobProvider.notifier).update(job);
+              },
               onDelete: (job) {
                 onJobDelete(context, ref, job);
               },

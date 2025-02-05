@@ -1,4 +1,5 @@
 import 'package:job_search/data/models/job.dart';
+import 'package:job_search/data/providers/active_job.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:job_search/data/repositories/jobs.dart' as repo show Jobs;
 
@@ -22,7 +23,7 @@ class Jobs extends _$Jobs {
 
   Future<void> addJob(Job job) async {
     // If there already is a job with the id of the one we are trying to add, just update it with the new values.
-    if(state.any((j) => job.id == j.id)){
+    if (state.any((j) => job.id == j.id)) {
       updateJob(job);
       return;
     }
@@ -32,6 +33,12 @@ class Jobs extends _$Jobs {
   }
 
   Future<void> removeJob(Job job) async {
+    final activeJob = ref.read(activeJobProvider);
+
+    if (activeJob?.id == job.id) {
+      ref.read(activeJobProvider.notifier).update(null);
+    }
+
     state = state.where((j) => j.id != job.id).toList();
     await repo.Jobs.delete(job);
   }
