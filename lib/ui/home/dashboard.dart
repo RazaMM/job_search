@@ -88,6 +88,7 @@ class Dashboard extends ConsumerWidget {
                           key: ValueKey(activeJob.id),
                           onSubmit: (job) {
                             ref.read(jobsProvider.notifier).updateJob(job);
+                            ref.read(activeJobProvider.notifier).update(null);
                           },
                           onCancel: () {
                             ref.read(activeJobProvider.notifier).update(null);

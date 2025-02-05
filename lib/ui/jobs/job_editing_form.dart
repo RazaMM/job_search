@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/data/models/job.dart';
+import 'package:job_search/data/models/job_status.dart';
 import 'package:job_search/ui/core/widgets/date_form_field.dart';
+import 'package:job_search/utils/to_title_case.dart';
 
 class JobEditingForm extends StatefulWidget {
   const JobEditingForm({
@@ -25,6 +27,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
   late final TextEditingController _companyController;
   late final TextEditingController _postingController;
   late DateTime? _date;
+  late JobStatus? _status;
 
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
     _companyController = TextEditingController(text: widget.job.company);
     _postingController = TextEditingController(text: widget.job.posting);
     _date = widget.job.dateApplied;
+    _status = widget.job.status;
   }
 
   @override
@@ -44,12 +48,14 @@ class _JobEditingFormState extends State<JobEditingForm> {
   }
 
   void onSubmit() {
-    if (!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate() || _status == null) return;
 
     widget.onSubmit(widget.job.copyWith(
       title: _titleController.text,
       company: _companyController.text,
+      posting: _postingController.text,
       dateApplied: _date!,
+      status: _status!
     ));
   }
 
@@ -126,6 +132,21 @@ class _JobEditingFormState extends State<JobEditingForm> {
                 }
                 return null;
               },
+            ),
+            // Job Status
+            Column(
+              children: [
+                for(final status in JobStatus.values)
+                  RadioListTile<JobStatus>(
+                    onChanged: (status) {
+                      setState(() {
+                        _status = status;
+                      });
+                    },
+                    value: status,
+                    title: Text(status.name.toTitleCase()), groupValue: _status,
+                  )
+              ],
             ),
             // Submit and Cancel buttons.
             Row(
