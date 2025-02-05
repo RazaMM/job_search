@@ -2,15 +2,8 @@
 
 A job application tracking app.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The app was just a test project to help me with learning the basics of Flutter.
+It’s not something that’s being actively worked on or developed.
+The main goal was to try out Flutter concepts like building UIs and handling state,
+so it’s more of a learning tool than a finished app.
+There aren’t any plans to add to it or update it right now.
