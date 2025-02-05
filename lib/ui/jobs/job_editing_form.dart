@@ -23,6 +23,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
 
   late final TextEditingController _titleController;
   late final TextEditingController _companyController;
+  late final TextEditingController _postingController;
   late DateTime? _date;
 
   @override
@@ -30,6 +31,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
     super.initState();
     _titleController = TextEditingController(text: widget.job.title);
     _companyController = TextEditingController(text: widget.job.company);
+    _postingController = TextEditingController(text: widget.job.posting);
     _date = widget.job.dateApplied;
   }
 
@@ -37,13 +39,12 @@ class _JobEditingFormState extends State<JobEditingForm> {
   void dispose() {
     _titleController.dispose();
     _companyController.dispose();
+    _postingController.dispose();
     super.dispose();
   }
 
   void onSubmit() {
     if (!_formKey.currentState!.validate()) return;
-
-    print(_date);
 
     widget.onSubmit(widget.job.copyWith(
       title: _titleController.text,
@@ -64,7 +65,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
           spacing: 30,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // Title input box
+            // Title
             TextFormField(
               decoration: InputDecoration(
                 label: Text("Job Title"),
@@ -90,7 +91,25 @@ class _JobEditingFormState extends State<JobEditingForm> {
                 return null;
               },
             ),
-            // Date Applied Picker
+            // Posting URL
+            TextFormField(
+              decoration: InputDecoration(
+                label: Text("Posting URL"),
+              ),
+              controller: _postingController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the URL to the job posting.';
+                }
+
+                if (Uri.tryParse(value) == null) {
+                  return 'Please enter a valid URL.';
+                }
+
+                return null;
+              },
+            ),
+            // Date Applied
             DateFormField(
               onChange: (date) {
                 setState(() {
@@ -108,6 +127,7 @@ class _JobEditingFormState extends State<JobEditingForm> {
                 return null;
               },
             ),
+            // Submit and Cancel buttons.
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 20,
