@@ -25,7 +25,7 @@ sealed class Job with _$Job {
       id: uuid.v4(),
       title: 'Untitled Job',
       company: 'Untitled Company',
-      posting: '',
+      posting: 'https://placeholder.com',
       dateApplied: DateTime.now(),
       status: JobStatus.applied,
     );
