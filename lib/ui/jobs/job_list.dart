@@ -8,12 +8,14 @@ class JobList extends StatelessWidget {
     required this.jobs,
     required this.onSelect,
     required this.onDelete,
+    this.query,
     this.emptyText = "No jobs saved.",
   });
 
   final List<Job> jobs;
   final Function(Job) onSelect;
   final Function(Job) onDelete;
+  final String? query;
   final String emptyText;
 
   @override
@@ -31,9 +33,19 @@ class JobList extends StatelessWidget {
       );
     }
 
+    final filteredJobs = (query == null || query!.isEmpty)
+        ? jobs
+        : jobs.where((job) {
+            final title = job.title.toLowerCase();
+            final company = job.company.toLowerCase();
+            final search = query!.toLowerCase();
+
+            return title.contains(search) || company.contains(search);
+          }).toList();
+
     return ListView.builder(
       itemBuilder: (context, index) {
-        final job = jobs[index];
+        final job = filteredJobs[index];
 
         return JobListItem(
           key: ValueKey(job.id),
@@ -42,7 +54,7 @@ class JobList extends StatelessWidget {
           onDelete: onDelete,
         );
       },
-      itemCount: jobs.length,
+      itemCount: filteredJobs.length,
     );
   }
 }
