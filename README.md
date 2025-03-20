@@ -6,7 +6,7 @@ The app was just a test project to help me with learning the basics of Flutter.
 It’s not something that’s being actively worked on or developed.
 The main goal was to try out Flutter concepts like building UIs and handling state,
 so it’s more of a learning tool than a finished app.
-There aren’t any plans to add to it or update it right now.
+There aren’t any plans to add to it, update it, or even release it as a real app right now.
 
 If you want to use it yourself, you will need to have flutter and its dependencies installed,
 and then build it yourself.
